@@ -1,0 +1,104 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: #1a1a1a;
+  background: #f3f5f9;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+.card {
+  width: min(860px, 100%);
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(13, 24, 45, 0.1);
+  padding: 1.5rem;
+}
+
+h1 { margin-top: 0; }
+.subtitle { margin-top: -0.25rem; color: #424c5e; }
+
+.upload-section, .tracks-section, .export-section { margin-top: 1.25rem; }
+.file-label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+
+input[type='file'], input[type='text'], button {
+  font: inherit;
+}
+
+input[type='file'], input[type='text'] {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #c6cedf;
+  border-radius: 8px;
+}
+
+.drop-zone {
+  margin-top: 0.75rem;
+  border: 2px dashed #8aa0d3;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  color: #4f5f7e;
+}
+
+.drop-zone.dragging { background: #eef3ff; border-color: #496ece; }
+
+.status {
+  min-height: 1.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+.status.info { background: #e9f2ff; color: #174ea6; }
+.status.success { background: #e8f7ed; color: #1f7a3b; }
+.status.error { background: #ffeaea; color: #ad1f1f; }
+
+.tracks-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.track-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.global-note { color: #364156; font-size: 0.95rem; }
+.track-list { display: grid; gap: 0.75rem; }
+
+.track-row {
+  border: 1px solid #d5dced;
+  border-radius: 10px;
+  padding: 0.8rem;
+}
+
+.track-title { font-weight: 700; margin-left: 0.35rem; }
+.name-label { display: grid; gap: 0.4rem; margin-top: 0.7rem; font-size: 0.95rem; }
+.meta { margin: 0.6rem 0 0; color: #51617f; font-size: 0.88rem; }
+
+button {
+  padding: 0.62rem 0.9rem;
+  border: none;
+  border-radius: 8px;
+  background: #2b59c3;
+  color: #fff;
+  cursor: pointer;
+}
+button.secondary { background: #e8eefb; color: #1f3f8f; }
+button:disabled { opacity: 0.55; cursor: not-allowed; }
+
+button:focus-visible,
+input:focus-visible,
+.drop-zone:focus-visible {
+  outline: 3px solid #8fb1ff;
+  outline-offset: 2px;
+}
+

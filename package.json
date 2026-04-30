@@ -1,0 +1,19 @@
+{
+  "name": "midi-track-splitter",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1",
+    "midi-file": "^1.2.4"
+  },
+  "devDependencies": {
+    "vite": "^5.4.11"
+  }
+}
+

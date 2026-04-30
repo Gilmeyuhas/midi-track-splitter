@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MIDI Track Splitter</title>
+  </head>
+  <body>
+    <main class="page">
+      <section class="card">
+        <h1>MIDI Track Splitter</h1>
+        <p class="subtitle">Upload a multitrack MIDI, rename tracks, and download a ZIP. Processing happens entirely in your browser.</p>
+
+        <section class="upload-section" aria-labelledby="upload-heading">
+          <h2 id="upload-heading">Upload MIDI</h2>
+          <label for="midi-file" class="file-label">Choose a .mid or .midi file</label>
+          <input id="midi-file" type="file" accept=".mid,.midi,audio/midi,audio/x-midi" />
+          <div id="drop-zone" class="drop-zone" tabindex="0" aria-label="Drag and drop MIDI file here">
+            Drag and drop a MIDI file here
+          </div>
+        </section>
+
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+
+        <section class="tracks-section" aria-labelledby="tracks-heading">
+          <div class="tracks-header">
+            <h2 id="tracks-heading">Detected Tracks</h2>
+            <div class="track-actions">
+              <button type="button" id="select-all" class="secondary">Select all</button>
+              <button type="button" id="select-none" class="secondary">Select none</button>
+              <button type="button" id="reset-names" class="secondary">Reset names</button>
+            </div>
+          </div>
+          <p id="global-note" class="global-note"></p>
+          <div id="track-list" class="track-list"></div>
+        </section>
+
+        <section class="export-section">
+          <button id="download-zip" type="button" disabled>Download ZIP</button>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+
