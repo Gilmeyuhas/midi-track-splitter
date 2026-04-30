@@ -1,6 +1,7 @@
 # MIDI Track Splitter
 
 A small browser-based utility that splits a multitrack `.mid`/`.midi` file into one MIDI file per musical track, then downloads everything in a ZIP.
+You can use it [HERE](https://gilmeyuhas.github.io/midi-track-splitter/)
 
 ## What this tool does
 
