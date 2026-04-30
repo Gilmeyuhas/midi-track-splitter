@@ -7,9 +7,7 @@ const CHANNEL_EVENT_TYPES = new Set([
   'controller',
   'programChange',
   'channelAftertouch',
-  'pitchBend',
-  'sysEx',
-  'endSysEx'
+  'pitchBend'
 ]);
 
 export function parseMidiFile(arrayBuffer) {
@@ -25,11 +23,11 @@ export function isLikelyGlobalTrack(track, index) {
   if (index !== 0) return false;
   if (hasChannelEvents(track)) return false;
 
-  return track.some((event) => event.type === 'meta' && event.subtype !== 'endOfTrack');
+  return track.some((event) => event.meta === true && event.type !== 'endOfTrack');
 }
 
 export function getTrackName(track, fallback = 'Untitled Track') {
-  const found = track.find((event) => event.type === 'meta' && event.subtype === 'trackName' && typeof event.text === 'string');
+  const found = track.find((event) => event.meta === true && event.type === 'trackName' && typeof event.text === 'string');
   return (found?.text || fallback).trim() || fallback;
 }
 
@@ -79,20 +77,20 @@ export function sanitizeFilename(name) {
 export function upsertTrackName(track, newName) {
   const cloned = structuredClone(track);
   const targetName = newName.trim();
-  const idx = cloned.findIndex((event) => event.type === 'meta' && event.subtype === 'trackName');
+  const idx = cloned.findIndex((event) => event.meta === true && event.type === 'trackName');
 
   if (idx >= 0) {
     cloned[idx].text = targetName;
   } else {
-    cloned.unshift({ deltaTime: 0, type: 'meta', subtype: 'trackName', text: targetName });
+    cloned.unshift({ deltaTime: 0, meta: true, type: 'trackName', text: targetName });
   }
 
   return cloned;
 }
 
 export function ensureSingleEndOfTrack(track) {
-  const withoutEnd = track.filter((event) => !(event.type === 'meta' && event.subtype === 'endOfTrack'));
-  withoutEnd.push({ deltaTime: 0, type: 'meta', subtype: 'endOfTrack' });
+  const withoutEnd = track.filter((event) => !(event.meta === true && event.type === 'endOfTrack'));
+  withoutEnd.push({ deltaTime: 0, meta: true, type: 'endOfTrack' });
   return withoutEnd;
 }
 
@@ -137,12 +135,22 @@ export function splitMidiToOutputs(parsedMidi, renameMap, selectedTrackIndexes, 
       format = 0;
     }
 
+    const header = {
+      format,
+      numTracks: outTracks.length
+    };
+
+    if (typeof parsedMidi.header?.ticksPerBeat === 'number') {
+      header.ticksPerBeat = parsedMidi.header.ticksPerBeat;
+    }
+
+    if (typeof parsedMidi.header?.framesPerSecond === 'number' && typeof parsedMidi.header?.ticksPerFrame === 'number') {
+      header.framesPerSecond = parsedMidi.header.framesPerSecond;
+      header.ticksPerFrame = parsedMidi.header.ticksPerFrame;
+    }
+
     const midiOut = {
-      header: {
-        format,
-        numTracks: outTracks.length,
-        ticksPerBeat: parsedMidi.header.ticksPerBeat
-      },
+      header,
       tracks: outTracks
     };
 
@@ -157,4 +165,3 @@ export function splitMidiToOutputs(parsedMidi, renameMap, selectedTrackIndexes, 
     };
   });
 }
-
